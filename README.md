@@ -185,6 +185,3 @@ src/
 | `npm run preview` | Preview the production build locally |
 | `npm run lint` | Run ESLint to check code quality |
 
----
-
-**Built with ❤️ using modern web technologies**
