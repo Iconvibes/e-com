@@ -8,24 +8,24 @@ export default function Success() {
     <div className="container mx-auto px-4 py-16">
       <div className="max-w-md mx-auto text-center">
         <div className="text-6xl mb-6">✅</div>
-        <h1 className="text-4xl font-bold text-green-600 mb-2">Payment Successful!</h1>
-        <p className="text-gray-600 Text-lg mb-8">
+        <h1 className="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">Payment Successful!</h1>
+        <p className="text-gray-600 dark:text-gray-400 text-lg mb-8">
           Thank you for your purchase. Your order has been confirmed.
         </p>
 
-        <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
-          <p className="text-gray-600 text-sm font-semibold mb-2">Reference Number:</p>
-          <p className="text-xl font-bold text-gray-800 break-all">{reference}</p>
+        <div className="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg p-6 mb-8 transition-colors duration-200">
+          <p className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-2">Reference Number:</p>
+          <p className="text-xl font-bold text-gray-800 dark:text-gray-100 break-all">{reference}</p>
         </div>
 
-        <p className="text-gray-500 text-sm mb-8">
+        <p className="text-gray-500 dark:text-gray-400 text-sm mb-8">
           A confirmation email has been sent to your inbox. You can use the reference
           number above to track your order.
         </p>
 
         <Link
           to="/"
-          className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 dark:hover:bg-blue-800 transition-colors"
         >
           Back to Home
         </Link>

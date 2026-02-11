@@ -5,6 +5,32 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ecommerce-store</title>
+    <!-- Initialize theme before React mounts to prevent flash -->
+    <script>
+      (function() {
+        try {
+          const savedTheme = localStorage.getItem("theme");
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const theme = savedTheme || (prefersDark ? "dark" : "light");
+          
+          const html = document.documentElement;
+          
+          // Only manage the dark class, not light
+          if (theme === "dark") {
+            html.classList.add("dark");
+            html.style.colorScheme = "dark";
+          } else {
+            html.classList.remove("dark");
+            html.style.colorScheme = "light";
+          }
+          
+          html.setAttribute("data-theme", theme);
+          console.log("Theme initialized to:", theme, "dark class:", html.classList.contains("dark"));
+        } catch (e) {
+          console.error("Failed to initialize theme:", e);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

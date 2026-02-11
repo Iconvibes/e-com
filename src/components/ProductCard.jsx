@@ -33,9 +33,9 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div className="border rounded-lg shadow hover:shadow-lg transition p-4 w-full">
+    <div className="border border-gray-200 dark:border-gray-700 rounded-lg shadow hover:shadow-lg transition-shadow p-4 w-full bg-white dark:bg-gray-800">
       {/* Main Image */}
-      <div className="relative w-full h-48 bg-gray-100 rounded mb-2 overflow-hidden">
+      <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-700 rounded mb-2 overflow-hidden">
         <img
           src={mainImage}
           alt={product.name}
@@ -52,7 +52,7 @@ export default function ProductCard({ product }) {
               key={idx}
               src={img}
               alt={`${product.name} ${idx + 2}`}
-              className="w-16 h-16 object-cover rounded border cursor-pointer shrink-0"
+              className="w-16 h-16 object-cover rounded border border-gray-200 dark:border-gray-600 cursor-pointer shrink-0"
               onClick={() => setMainImage(img)}
             />
           ))}
@@ -60,12 +60,12 @@ export default function ProductCard({ product }) {
       )}
 
       {/* Product Info */}
-      <h2 className="font-semibold text-lg">{product.name}</h2>
-      <p className="text-gray-600 text-sm mb-4">₦{product.price?.toLocaleString()}</p>
+      <h2 className="font-semibold text-lg text-gray-900 dark:text-gray-100">{product.name}</h2>
+      <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">₦{product.price?.toLocaleString()}</p>
 
       {/* Add to Cart */}
       <button
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors"
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors dark:hover:bg-blue-800"
         onClick={handleAddToCart}
       >
         Add to Cart

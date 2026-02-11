@@ -6,10 +6,14 @@ A modern, full-featured e-commerce application built with React and Vite, featur
 
 - [Tech Stack](#tech-stack)
 - [Stack Justification](#stack-justification)
+- [Features](#features)
 - [Setup Instructions](#setup-instructions)
-- [Payment Flow](#payment-flow)
+- [Environment Variables](#environment-variables)
+- [Payment Integration](#payment-integration)
+- [Theme/Dark Mode](#themedark-mode)
 - [Project Structure](#project-structure)
 - [Available Scripts](#available-scripts)
+- [Security & Production](#security--production)
 
 ## Tech Stack
 
@@ -52,6 +56,17 @@ A modern, full-featured e-commerce application built with React and Vite, featur
 - Modern routing library with declarative route definitions
 - Supports nested routes, dynamic segments, and advanced features like loaders and actions
 
+## Features
+
+- 🛍️ **Product Browsing**: Browse products fetched from API with loading and error states
+- 🛒 **Shopping Cart**: Add/remove items from cart with persistent state management
+- 🌙 **Dark/Light Mode**: Toggle between dark and light themes with system preference detection
+- 💳 **Secure Checkout**: Complete checkout flow with form validation
+- 💰 **Paystack Payment**: Test mode with Success/Bank Authentication/Declined options
+- 📱 **Responsive Design**: Fully responsive layout for mobile, tablet, and desktop
+- ⚡ **Fast Performance**: Built with Vite for lightning-fast development and production builds
+- 🔒 **Secure**: Environment variables protected, no hardcoded secrets
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -73,13 +88,32 @@ A modern, full-featured e-commerce application built with React and Vite, featur
 
 3. **Environment Configuration**
    
-   Create a `.env.local` file in the root directory and add the following variables:
-   ```
-   VITE_PAYSTACK_PUBLIC_KEY=your_paystack_public_key
-   VITE_API_BASE_URL=your_api_endpoint (optional)
+   Create a `.env.local` file in the root directory (this file is ignored by Git for security):
+   ```dotenv
+   VITE_PAYSTACK_PUBLIC_KEY=pk_test_057509cf28e042f5f0a1c187154070f7f1ec4625
    ```
    
-   You can get your Paystack public key from the [Paystack Dashboard](https://dashboard.paystack.com).
+   **For Production**: See [PRODUCTION_SETUP.md](PRODUCTION_SETUP.md) for live key configuration and backend setup.
+
+## Environment Variables
+
+### Frontend (.env.local)
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `VITE_PAYSTACK_PUBLIC_KEY` | Paystack public key (test or live) | `pk_test_...` or `pk_live_...` |
+
+**⚠️ Security Note**: 
+- `.env.local` is **automatically ignored by Git** (see `.gitignore`)
+- Never commit files containing secret keys
+- The `pk_test_...` key in `.env` is **safe to commit** (it's a test key)
+- Production secret keys should only be stored on your backend server
+
+### Backend (Server Only)
+For production payment verification, your backend needs:
+```
+PAYSTACK_SECRET_KEY=sk_live_your_actual_key_here
+```
+This should **NEVER** be in your frontend `.env.local` file.
 
 4. **Start Development Server**
    ```bash
@@ -103,9 +137,17 @@ A modern, full-featured e-commerce application built with React and Vite, featur
    npm run lint
    ```
 
-## Payment Flow
+## Payment Integration
 
-The e-commerce store uses **Paystack** for secure payment processing. Here's how the payment flow works:
+### Current Status: Test Mode
+The application is currently configured in **Paystack Test Mode** with a simplified payment modal showing:
+- ✅ Success
+- ⚠️ Bank Authentication  
+- ❌ Declined
+
+These options allow testing different payment scenarios without charging real money.
+
+### How the Payment Flow Works
 
 ### 1. **Checkout Initiation**
    - User navigates to the checkout page with items in their cart
@@ -160,6 +202,33 @@ User → Checkout Form → Form Validation → Paystack Modal
 ### Environment Variables Required
 - `VITE_PAYSTACK_PUBLIC_KEY`: Your Paystack public key for payment processing
 
+**🔄 Production Migration**: Ready to go live? See [PRODUCTION_SETUP.md](PRODUCTION_SETUP.md) for:
+- How to get live Paystack keys
+- Backend payment verification setup
+- CSP headers configuration
+- Deployment steps
+
+## Theme/Dark Mode
+
+### Features
+- 🌙 **Dark Mode**: Automatic detection of system preference (macOS/Windows dark mode)
+- 💾 **Persistence**: Theme preference is saved to localStorage and persists across sessions
+- 🔄 **Toggle Button**: Manual theme toggle in the navigation bar
+- 🎨 **Tailwind Integration**: Uses Tailwind CSS class-based dark mode strategy
+
+### How It Works
+1. On first visit, system preference is detected via `matchMedia("(prefers-color-scheme: dark)")`
+2. Theme preference is stored in localStorage
+3. Pre-initialization script in `index.html` prevents theme flash on page load
+4. Click sun/moon icon in navigation to toggle between light and dark modes
+5. All components have dark mode styling with Tailwind's `dark:` prefix
+
+### Dark Mode Implementation
+- **Context**: `src/context/ThemeContext.jsx` manages theme state globally
+- **Hook**: `useTheme()` custom hook for accessing theme and toggle function
+- **Storage**: localStorage key: `theme` (values: `"light"` or `"dark"`)
+- **Styling**: All components use Tailwind CSS dark mode classes
+
 ## Project Structure
 
 ```
@@ -184,4 +253,65 @@ src/
 | `npm run build` | Build the application for production |
 | `npm run preview` | Preview the production build locally |
 | `npm run lint` | Run ESLint to check code quality |
+
+## Security & Production
+
+### Security Features
+
+✅ **Environment Variables Protected**
+- `.env` and `.env.local` files are in `.gitignore` 
+- Secret keys are never committed to Git
+- Test keys (`pk_test_...`) are safe if accidentally committed
+
+✅ **No Hardcoded Secrets**
+- All sensitive API keys are loaded from environment variables only
+- Frontend code contains no secret keys or credentials
+
+✅ **Paystack Security**
+- Payment processing handled entirely by Paystack's secure modal
+- No sensitive payment data is handled by your frontend
+- Secret keys are NOT used in frontend code
+
+### Converting to Production
+
+When you're ready to deploy with real payments:
+
+1. **Read** [PRODUCTION_SETUP.md](PRODUCTION_SETUP.md) - Complete guide including:
+   - How to get live Paystack keys
+   - Backend payment verification code (Node.js/Express example)
+   - Deployment steps
+   - Security checklist
+
+2. **Key Changes Required**:
+   - Get live Paystack keys from [Paystack Dashboard](https://dashboard.paystack.com)
+   - Create backend endpoint for payment verification
+   - Update `.env` with live public key
+   - Store backend secret key only on server (never in frontend)
+   - Enable proper HTTPS and CSP headers
+
+3. **Test Cards** (work with live keys):
+   - Number: `4111111111111111`
+   - CVV: Any 3 digits
+   - Expiry: Any valid future date
+   - OTP: `123456`
+
+### Pre-Deployment Checklist
+
+- [ ] Environment variables configured securely
+- [ ] No hardcoded API keys in codebase
+- [ ] `.gitignore` protecting sensitive files
+- [ ] Paystack keys obtained from dashboard
+- [ ] Backend payment verification endpoint created
+- [ ] HTTPS enabled on production domain
+- [ ] CSP headers configured (if needed)
+- [ ] Tested payment flow end-to-end
+- [ ] Error handling and logging in place
+- [ ] PRODUCTION_SETUP.md reviewed
+
+### Support & Resources
+
+- 📚 [Paystack Documentation](https://paystack.com/docs)
+- 💬 [Paystack Support](support@paystack.com)
+- 🐛 [Report Issues](https://github.com/yourusername/ecommerce/issues)
+- 📖 [Production Setup Guide](PRODUCTION_SETUP.md)
 

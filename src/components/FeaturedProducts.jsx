@@ -37,7 +37,7 @@ export default function FeaturedProducts() {
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-12">
-        <p className="text-center text-gray-500">Loading featured products...</p>
+        <p className="text-center text-gray-500 dark:text-gray-400">Loading featured products...</p>
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function FeaturedProducts() {
   if (isError) {
     return (
       <div className="container mx-auto px-4 py-12">
-        <p className="text-center text-red-500">{error?.message || "Failed to load products"}</p>
+        <p className="text-center text-red-500 dark:text-red-400">{error?.message || "Failed to load products"}</p>
       </div>
     );
   }
@@ -56,8 +56,8 @@ export default function FeaturedProducts() {
   return (
     <section className="container mx-auto px-4 py-16">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold mb-2">Featured Products</h2>
-        <p className="text-gray-600">Check out our handpicked selection of quality items</p>
+        <h2 className="text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">Featured Products</h2>
+        <p className="text-gray-600 dark:text-gray-400">Check out our handpicked selection of quality items</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
@@ -69,7 +69,7 @@ export default function FeaturedProducts() {
       <div className="text-center">
         <Link
           to="/products"
-          className="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+          className="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 dark:hover:bg-blue-800 transition-colors"
         >
           View All Products
         </Link>

@@ -37,7 +37,7 @@ export default function Products() {
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-12">
-        <p className="text-center text-gray-500">Loading products...</p>
+        <p className="text-center text-gray-500 dark:text-gray-400">Loading products...</p>
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function Products() {
   if (isError) {
     return (
       <div className="container mx-auto px-4 py-12">
-        <p className="text-center text-red-500">
+        <p className="text-center text-red-500 dark:text-red-400">
           {error?.message || "Failed to load products"}
         </p>
       </div>
@@ -65,7 +65,7 @@ export default function Products() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-6">All Products</h1>
+        <h1 className="text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100">All Products</h1>
 
         {/* Search Bar */}
         <div className="mb-6">
@@ -74,18 +74,18 @@ export default function Products() {
             placeholder="Search products by name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-colors duration-200"
           />
         </div>
 
-        <p className="text-gray-600">
+        <p className="text-gray-600 dark:text-gray-400">
           {products.length} product{products.length !== 1 ? "s" : ""} found
         </p>
       </div>
 
       {products.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">
+          <p className="text-gray-500 dark:text-gray-400 text-lg">
             No products found matching your search.
           </p>
         </div>
