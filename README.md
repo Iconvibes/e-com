@@ -90,12 +90,29 @@ A modern, full-featured e-commerce application built with React and Vite, featur
    
    Create a `.env.local` file in the root directory (this file is ignored by Git for security):
    ```dotenv
+   VITE_PAYSTACK_PUBLIC_KEY=pk_test_your_test_key_here
+   ```
+
+4. **Get Your Paystack Test Key**
+
+   ⚠️ **IMPORTANT**: You must replace `pk_test_your_test_key_here` with your actual Paystack test key.
+   
+   Steps to get your test key:
+   1. Go to [Paystack Dashboard](https://dashboard.paystack.com)
+   2. Log in with your account
+   3. Click **Settings** (bottom left sidebar)
+   4. Go to **API Keys & Webhooks**
+   5. Under "Test Keys" section, copy the **Public Key** (starts with `pk_test_`)
+   6. Paste it in your `.env.local` file, replacing the placeholder
+   
+   Example of what it should look like:
+   ```dotenv
    VITE_PAYSTACK_PUBLIC_KEY=pk_test_057509cf28e042f5f0a1c187154070f7f1ec4625
    ```
    
    **For Production**: See [PRODUCTION_SETUP.md](PRODUCTION_SETUP.md) for live key configuration and backend setup.
 
-## Environment Variables
+5. **Start Development Server**
 
 ### Frontend (.env.local)
 | Variable | Description | Example |
@@ -115,24 +132,24 @@ PAYSTACK_SECRET_KEY=sk_live_your_actual_key_here
 ```
 This should **NEVER** be in your frontend `.env.local` file.
 
-4. **Start Development Server**
+5. **Start Development Server**
    ```bash
    npm run dev
    ```
    
    The application will be available at `http://localhost:5173`
 
-5. **Build for Production**
+6. **Build for Production**
    ```bash
    npm run build
    ```
 
-6. **Preview Production Build**
+7. **Preview Production Build**
    ```bash
    npm run preview
    ```
 
-7. **Linting**
+8. **Linting**
    ```bash
    npm run lint
    ```
